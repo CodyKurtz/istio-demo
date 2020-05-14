@@ -1,0 +1,4 @@
+apiVersion: v1
+name: bookinfo
+version: 1.0.0
+description: Helm chart for Istio bookinfo demo app

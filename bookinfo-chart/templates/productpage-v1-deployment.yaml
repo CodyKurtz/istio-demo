@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: productpage-v1
+  labels:
+    chart: {{ template "bookinfo.chart" . }}
+    release: {{ .Release.Name }}
+    app: productpage
+    version: v1
+spec:
+  replicas: {{ .Values.productpage.replicas }}
+  selector:
+    matchLabels:
+      app: productpage
+      release: {{ .Release.Name }}
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: productpage
+        release: {{ .Release.Name }}
+        version: v1
+    spec:
+      serviceAccountName: bookinfo-productpage
+      containers:
+      - name: productpage
+        image: {{.Values.hub}}/examples-bookinfo-productpage-v1:1.15.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: {{ .Values.productpage.service.port }}
+        volumeMounts:
+        - name: tmp
+          mountPath: /tmp
+      volumes:
+      - name: tmp
+        emptyDir: {}

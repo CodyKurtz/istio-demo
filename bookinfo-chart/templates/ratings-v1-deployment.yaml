@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ratings-v1
+  labels:
+    chart: {{ template "bookinfo.chart" . }}
+    release: {{ .Release.Name }}
+    app: ratings
+    version: v1
+spec:
+  replicas: {{ .Values.ratings.replicas }}
+  selector:
+    matchLabels:
+      app: ratings
+      release: {{ .Release.Name }}
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: ratings
+        release: {{ .Release.Name }}
+        version: v1
+    spec:
+      serviceAccountName: bookinfo-ratings
+      containers:
+      - name: ratings
+        image: {{.Values.hub}}/examples-bookinfo-ratings-v1:1.15.0
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: {{ .Values.ratings.service.port }}

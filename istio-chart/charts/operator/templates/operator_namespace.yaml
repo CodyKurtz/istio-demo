@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ template "operatorNamespace" . }}
+  labels:
+    istio-operator-managed: Reconcile
+    istio-injection: disabled
+---

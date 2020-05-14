@@ -1,0 +1,12 @@
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+metadata:
+  namespace:  {{ template "istioNamespace" . }}
+  name: istiocontrolplane
+spec:
+  hub: {{.Values.global.hub}}
+  tag: {{.Values.global.tag}}
+  namespace:  {{ template "istioNamespace" . }}
+{{- with .Values.istio.istioSpec -}}
+{{ toYaml . | nindent 2 }}
+{{ end }}
