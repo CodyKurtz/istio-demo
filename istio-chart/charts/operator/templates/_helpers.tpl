@@ -25,6 +25,6 @@
 {{- if .Values.global.hub -}}
     {{ .Values.global.hub }}
 {{- else -}}
-    {{.Values.hub | default "nexus.tds.td.com:8447/istio" }}
+    {{.Values.hub | default "myRegistry/istio" }}
 {{- end }}
 {{- end -}}
